@@ -10,7 +10,6 @@
 #define   BTN     6
 #define   BAUDRATE  9600
 
-bool flag = false;
 //unit8_t flag = 0;
 
 void configuracion();

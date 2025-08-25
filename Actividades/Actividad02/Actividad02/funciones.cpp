@@ -1,8 +1,9 @@
 #include "funciones.h"
+bool flag = false;
 
 void configuracion() 
 {
-  Serial.begin(BAUDRATE):
+  Serial.begin(BAUDRATE);
 
   pinMode(LED1, OUTPUT);
   pinMode(LED2, OUTPUT);
