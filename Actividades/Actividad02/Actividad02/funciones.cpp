@@ -1,30 +1,51 @@
 #include "funciones.h"
 
-void configurarPines(int led1, int led2, int led3, int led4, int boton) 
+void configuracion() 
 {
-  pinMode(led1, OUTPUT);
-  pinMode(led2, OUTPUT);
-  pinMode(led3, OUTPUT);
-  pinMode(led4, OUTPUT);
-  pinMode(boton, INPUT);
+  Serial.begin(BAUDRATE):
+
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3, OUTPUT);
+  pinMode(LED4, OUTPUT);
+  pinMode(BTN, INPUT);
+
+  digitalWrite(LED1, false);
+  digitalWrite(LED2, false);
+  digitalWrite(LED3, false);
+  digitalWrite(LED4, false);
 }
 
-void secuenciaLeds(int led1, int led2, int led3, int led4) 
+void espera()
 {
-  digitalWrite(led1, HIGH);
-  delay(1000);
+  if(BTN)
+  {
+    flag = true;
+  }
+}
 
-  digitalWrite(led2, HIGH);
-  delay(1000);
+void secuencia()
+{
+  if(flag)
+  {
+    flag == false;
 
-  digitalWrite(led3, HIGH);
-  delay(1000);
+    digitalWrite(LED1, true);
+    delay(DELAY);
 
-  digitalWrite(led4, HIGH);
-  delay(1000);
+    digitalWrite(LED2, true);
+    delay(DELAY);
 
-  digitalWrite(led1, LOW);
-  digitalWrite(led2, LOW);
-  digitalWrite(led3, LOW);
-  digitalWrite(led4, LOW);
+    digitalWrite(LED3, true);
+    delay(DELAY);
+    
+    
+    digitalWrite(LED4, true);
+    delay(DELAY);
+
+    digitalWrite(LED1, false);
+    digitalWrite(LED2, false);
+    digitalWrite(LED3, false);
+    digitalWrite(LED4, false);
+  }
 }
