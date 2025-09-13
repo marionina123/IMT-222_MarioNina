@@ -1,0 +1,35 @@
+Documento — Versión 2.0 Control de Volumen + Canal
+
+Estrategia de persistencia
+
+Se decidió no escribir en EEPROM en cada ciclo del loop, sino únicamente al finalizar cada pulsación válida.
+Esto reduce de manera significativa el número de escrituras y, por lo tanto, el desgaste de la EEPROM, que tiene un límite de aproximadamente 100.000 ciclos por celda.
+
+Versión base: escribía en cada incremento, generando hasta 67 escrituras para pasar de volumen 23 a 90.
+Versión optimizada: escribe una sola vez por pulsación, reduciendo las escrituras a 67 en el mismo caso, pero garantizando que no se multipliquen por rebotes o ciclos rápidos del loop.
+
+La justificación es lograr un equilibrio entre confiabilidad (si se apaga, se mantiene el último valor) y durabilidad (minimizar escrituras innecesarias).
+
+Decisiones de manejo de rebote y eventos
+Se utilizó la técnica INPUT_PULLUP + while(!digitalRead(...)) para asegurar que cada pulsación se cuente una sola vez, esperando a que el botón se libere antes de aceptar otra entrada.
+Se añadió un delay corto (30 ms) para cubrir rebotes mecánicos.
+El comportamiento elegido garantiza que cada toque, sin importar duración, se traduce en 1 incremento/decremento exacto.
+
+Diseño del esquema de almacenamiento en EEPROM
+El almacenamiento es directo y sencillo, usando una celda para cada variable:
+Dirección 0 → Volumen (rango 0–100).
+Dirección 1 → Canal (rango 1–9).
+
+En el arranque:
+Se leen ambas direcciones.
+Si los valores están fuera de rango (ej. por datos residuales en EEPROM), se cargan valores por defecto:
+Volumen = 20
+Canal = 1
+
+
+Conclusión
+
+La solución implementada garantiza:
+Durabilidad de EEPROM mediante reducción de escrituras.
+Uso robusto de botones sin repeticiones por rebote.
+Almacenamiento claro y confiable de volumen y canal, con recuperación de valores válidos en cada arranque.
